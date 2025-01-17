@@ -10,6 +10,8 @@ APPLICATION_ID = os.getenv("APPLICATION_ID")
 NUTRITIONIX_API = os.getenv("NUTRITIONIX_API")
 AUTH_TOKEN = os.getenv("AUTH_TOKEN")
 SHEETY_API = os.getenv("SHEETY_API")
+AUTH_USERNAME = os.getenv("AUTH_USERNAME")
+AUTH_PASSWORD = os.getenv("AUTH_PASSWORD")
 
 host_domain = "https://trackapi.nutritionix.com"
 endpoint = "/v2/natural/exercise"
@@ -19,6 +21,7 @@ sheety_domain = f"https://api.sheety.co/{SHEETY_API}/myWorkouts/workouts"
 headers = {
     "x-app-id": APPLICATION_ID,
     "x-app-key": NUTRITIONIX_API,
+    "Authorization": AUTH_TOKEN,
 }
 
 nutritionix_endpoint = f"{host_domain}/{endpoint}"
@@ -51,13 +54,7 @@ for exercise in result["exercises"]:
         }
     }
     
-    sheet_response = requests.post(sheety_domain, json=sheet_inputs)
+    sheet_response = requests.post(sheety_domain, json=sheet_inputs, auth=(AUTH_USERNAME, AUTH_PASSWORD))
     
     print(sheet_response.text)
 
-
-# sheety_config = {
-    
-# }
-
-# requests.post()
